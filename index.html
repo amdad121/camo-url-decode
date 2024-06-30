@@ -20,7 +20,17 @@
                     Decode
                 </button>
             </div>
-            <p id="label" class="text-gray-700" style="display: none">Original URL:</p>
+            <div class="flex items-center justify-between">
+                <p id="label" class="text-gray-700" style="display: none">Original URL:</p>
+                <button
+                    onclick="resetForm()"
+                    id="resetBtn"
+                    class="bg-gray-400 text-white px-2 rounded hover:bg-gray-500"
+                    style="display: none"
+                >
+                    Reset
+                </button>
+            </div>
             <a
                 id="originalUrl"
                 href="#"
@@ -45,18 +55,31 @@
                     const decodedStr = atob(hexToBase64(encodedPart));
                     const originalUrlElement = document.getElementById('originalUrl');
                     const labelElement = document.getElementById('label');
+                    const resetBtnElement = document.getElementById('resetBtn');
                     originalUrlElement.textContent = decodedStr;
                     originalUrlElement.href = decodedStr;
                     originalUrlElement.style.display = 'block';
                     labelElement.style.display = 'block';
+                    resetBtnElement.style.display = 'block';
                 } catch (e) {
                     const originalUrlElement = document.getElementById('originalUrl');
                     const labelElement = document.getElementById('label');
+                    const resetBtnElement = document.getElementById('resetBtn');
                     originalUrlElement.textContent = 'Invalid URL';
                     originalUrlElement.href = '#';
                     originalUrlElement.style.display = 'block';
                     labelElement.style.display = 'block';
+                    resetBtnElement.style.display = 'block';
                 }
+            }
+
+            function resetForm() {
+                document.getElementById('camoUrl').value = '';
+                document.getElementById('originalUrl').textContent = '';
+                document.getElementById('originalUrl').href = '#';
+                document.getElementById('label').style.display = 'none';
+                document.getElementById('resetBtn').style.display = 'none';
+                document.getElementById('originalUrl').style.display = 'none';
             }
         </script>
     </body>
