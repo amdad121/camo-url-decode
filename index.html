@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Decode Camo URL</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-xl">
+            <h1 class="text-2xl font-bold mb-4">Decode Camo URL</h1>
+            <div class="flex mb-4">
+                <input
+                    type="text"
+                    id="camoUrl"
+                    class="flex-grow p-2 border border-gray-300 rounded-l"
+                    placeholder="Enter the Camo URL"
+                />
+                <button onclick="decodeUrl()" class="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600">
+                    Decode
+                </button>
+            </div>
+            <p id="label" class="text-gray-700" style="display: none">Original URL:</p>
+            <a
+                id="originalUrl"
+                href="#"
+                target="_blank"
+                class="font-bold text-blue-600 mt-2 break-all"
+                style="display: none"
+            ></a>
+        </div>
+
+        <script>
+            function decodeUrl() {
+                const camoUrl = document.getElementById('camoUrl').value;
+                const encodedPart = camoUrl.split('/').pop();
+                const hexToBase64 = (hex) =>
+                    btoa(
+                        hex
+                            .match(/\w{2}/g)
+                            .map((a) => String.fromCharCode(parseInt(a, 16)))
+                            .join('')
+                    );
+                try {
+                    const decodedStr = atob(hexToBase64(encodedPart));
+                    const originalUrlElement = document.getElementById('originalUrl');
+                    const labelElement = document.getElementById('label');
+                    originalUrlElement.textContent = decodedStr;
+                    originalUrlElement.href = decodedStr;
+                    originalUrlElement.style.display = 'block';
+                    labelElement.style.display = 'block';
+                } catch (e) {
+                    const originalUrlElement = document.getElementById('originalUrl');
+                    const labelElement = document.getElementById('label');
+                    originalUrlElement.textContent = 'Invalid URL';
+                    originalUrlElement.href = '#';
+                    originalUrlElement.style.display = 'block';
+                    labelElement.style.display = 'block';
+                }
+            }
+        </script>
+    </body>
+</html>
